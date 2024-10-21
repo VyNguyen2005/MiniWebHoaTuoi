@@ -1,5 +1,7 @@
- <footer class="container">
-            <strong>&copy; 2023 - Student Name - Id </strong>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<footer class="container">
+     
+            <strong>&copy; 2024 - Nguyễn Hiền Vy - 2321160060 </strong>
         </footer>
 
         <!-- Optional JavaScript -->
