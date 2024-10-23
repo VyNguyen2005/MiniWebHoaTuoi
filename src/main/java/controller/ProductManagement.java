@@ -4,13 +4,18 @@
  */
 package controller;
 
+import dao.HoaDAO;
+import dao.LoaiDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Hoa;
 
 /**
  *
@@ -22,57 +27,75 @@ public class ProductManagement extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProductManagement</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProductManagement at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        response.setCharacterEncoding("UTF-8");
+        HoaDAO hoaDao = new HoaDAO();
+        LoaiDAO loaiDao = new LoaiDAO();
+
+        String action = "list";
+        if (request.getParameter("action") != null) {
+            action = request.getParameter("action");
+        }
+        switch (action) {
+            case "list":
+                ArrayList<Hoa> dsHoa = hoaDao.getAll();
+                request.setAttribute("dsHoa", dsHoa);
+                request.getRequestDispatcher("admin/list-product.jsp").forward(request, response);
+                break;
+            case "add":
+                request.setAttribute("dsLoai", loaiDao.getAll());
+                request.getRequestDispatcher("admin/add-product.jsp").forward(request, response);
+                break;
+            case "delete":
+                String maHoaXoa = request.getParameter("mahoa"); 
+                if (maHoaXoa != null) {
+                    int maHoa = Integer.parseInt(maHoaXoa);
+                    boolean isDeleted = hoaDao.Delete(maHoa);
+                    if (isDeleted) {
+                        request.setAttribute("message", "Xóa sản phẩm thành công.");
+                    }
+                }
+                request.getRequestDispatcher("ProductManagement?action=list").forward(request, response);
+                break;
+            case "insert":
+
+//            case "insert":
+//                int mahoa = hoaDao.getNextMahoa();
+//
+//                String tenhoa = request.getParameter("tenhoa");
+//                String gia = request.getParameter("gia");
+//                double giaDouble = Double.parseDouble(gia);
+//                String hinhanh = request.getParameter("hinhanh");
+//                String theloai = request.getParameter("theloai");
+//
+//                int maLoai = 0; 
+//                if (theloai != null && !theloai.trim().isEmpty()) {
+//                    maLoai = Integer.parseInt(theloai);
+//                }
+//
+//                Hoa hoa = new Hoa(mahoa, tenhoa, giaDouble, hinhanh, maLoai, new Date(System.currentTimeMillis()));
+//                
+//                hoaDao.Insert(hoa);
+//                
+//                response.sendRedirect("ProductManagement?action=list");
+//                break;
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

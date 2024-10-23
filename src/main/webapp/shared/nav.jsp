@@ -14,7 +14,7 @@
           <a class="nav-link" href="product.jsp">Product</a>
         </li>  
         <li class="nav-item">
-          <a class="nav-link" href="product.jsp">Management</a>
+          <a class="nav-link" href="ProductManagement">Management</a>
         </li> 
     </div>
   </div>

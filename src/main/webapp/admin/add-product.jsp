@@ -4,6 +4,8 @@
     Author     : ADMIN
 --%>
 
+<%@page import="model.Loai"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="../shared/header.jsp"/>
@@ -12,14 +14,14 @@
 <div class="container">
     <h2 class="mt-2">Thêm sản phẩm (hoa)</h2>
 
-    <form method="post" class="form-group">
+    <form method="post" class="form-group" action="ProductManagement?action=insert" enctype="multipart/form-data">
         <div class="mb-2">
             <label>Tên hoa</label>
-            <input type="text" name="tenhoa" class="form-control"/>
+            <input type="text" name="tenhoa" class="form-control" autofocus autocomplete="off"/>
         </div>
         <div class="mb-2">
             <label>Giá</label>
-            <input type="text" name="gia" class="form-control"/>
+            <input type="text" name="gia" class="form-control" autocomplete="off"/>
         </div>
         <div class="mb-2">
             <label>Hình ảnh</label>
@@ -28,11 +30,22 @@
         <div class="mb-2">
             <label>Thể loại</label>
             <select name="theloai" class="form-control">
-                <option value=""></option>
+                <option value="">==Chọn thể loại==</option>
+                <%
+                    ArrayList<Loai> dsLoai = (ArrayList<Loai>) request.getAttribute("dsLoai");
+                    if (dsLoai != null) {
+                        for (Loai loai : dsLoai) {
+
+                %>
+                <option value="<%= loai.getMaloai()%>"><%= loai.getTenloai()%></option>
+                <%
+                        }
+                    }
+                %>
             </select>
         </div>
         <div>
-            <button class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Save</button>
         </div>
     </form>
 </div>
