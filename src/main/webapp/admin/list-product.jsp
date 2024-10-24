@@ -9,11 +9,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../shared/header.jsp"/>
 <jsp:include page="../shared/nav.jsp"/>
-<% if (request.getAttribute("message") != null) {%>
+
+<% if (request.getAttribute("success") != null) { %>
 <script>
-    alert("<%= request.getAttribute("message")%>");
+    Swal.fire({
+        position: "top-center",
+        icon: "success",
+        title: "<%= request.getAttribute("success") %>",
+        showConfirmButton: false,
+        timer: 1500
+    });
 </script>
-<% } %>
+<%
+    }%>
 <div class="container">
     <h2 class="py-3">DANH SÁCH SẢN PHẨM</h2>
     <div class="mb-2 text-end">
@@ -34,18 +42,17 @@
                 ArrayList<Hoa> dsHoa = (ArrayList<Hoa>) request.getAttribute("dsHoa");
                 if (dsHoa != null) {
                     for (Hoa hoa : dsHoa) {
-
             %>
             <tr>
-                <th scope="row"><%= hoa.getTenhoa()%></th>
-                <td><%= hoa.getGia()%> VND</td>
+                <th scope="row"><%= hoa.getTenhoa() %></th>
+                <td><%= hoa.getGia() %> VND</td>
                 <td>
-                    <img style="width: 100px" src="assets/images/products/<%= hoa.getHinh()%>"/>
+                    <img style="width: 100px" src="assets/images/products/<%= hoa.getHinh() %>"/>
                 </td>
-                <td><%= hoa.getMaloai()%></td>
+                <td><%= hoa.getMaloai() %></td>
                 <td>
-                    <a href="ProductManagement?action=edit&mahoa=<%= hoa.getMahoa()%>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i>Sửa</a>
-                    <a href="ProductManagement?action=delete&mahoa=<%= hoa.getMahoa()%>" class="btn btn-danger"><i class="bi bi-trash"></i>Xóa</a>
+                    <a href="ProductManagement?action=edit&mahoa=<%= hoa.getMahoa() %>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i>Sửa</a>
+                    <a href="ProductManagement?action=delete&mahoa=<%= hoa.getMahoa() %>" class="btn btn-danger" onclick="return confirm("Bạn có chắc chắn muốn xoá sản phẩm này?")" ><i class="bi bi-trash"></i>Xóa</a>
                 </td>
             </tr>
             <%

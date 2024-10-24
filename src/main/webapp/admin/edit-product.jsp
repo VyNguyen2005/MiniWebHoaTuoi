@@ -4,7 +4,7 @@
     Author     : ADMIN
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../shared/header.jsp"/>
 <jsp:include page="../shared/nav.jsp"/>
 

@@ -6,15 +6,14 @@
 
 <%@page import="model.Loai"%>
 <%@page import="java.util.ArrayList"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../shared/header.jsp"/>
 <jsp:include page="../shared/nav.jsp"/>
 
 <div class="container">
     <h2 class="mt-2">Thêm sản phẩm (hoa)</h2>
 
-    <form method="post" class="form-group" action="ProductManagement?action=insert" enctype="multipart/form-data">
+    <form method="post" class="form-group" enctype="multipart/form-data">
         <div class="mb-2">
             <label>Tên hoa</label>
             <input type="text" name="tenhoa" class="form-control" autofocus autocomplete="off"/>

@@ -7,14 +7,15 @@
 
         <title>Flower shop</title>
         <link href="../assets/images/logo.png" rel="shortcut icon" />
-
+     
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
         <!-- Font Awesome -->
        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <!-- Custom style -->
         <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/style.css">
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/bootstrap.css">       
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/bootstrap.css">   
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>   
    <body>  
      <%
