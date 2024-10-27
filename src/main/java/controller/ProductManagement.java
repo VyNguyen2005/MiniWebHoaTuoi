@@ -47,11 +47,11 @@ public class ProductManagement extends HttpServlet {
                 request.getRequestDispatcher("admin/list-product.jsp").forward(request, response);
                 break;
             case "add":
-                if(request.getMethod().equalsIgnoreCase("GET")){
-                   request.setAttribute("dsLoai", loaiDao.getAll());
-                   request.getRequestDispatcher("admin/add-product.jsp").forward(request, response);
+                if (request.getMethod().equalsIgnoreCase("GET")) {
+                    request.setAttribute("dsLoai", loaiDao.getAll());
+                    request.getRequestDispatcher("admin/add-product.jsp").forward(request, response);
                 }
-                
+
                 String tenhoa = request.getParameter("tenhoa");
                 double gia = Double.parseDouble(request.getParameter("gia"));
                 Part part = request.getPart("hinhanh");
@@ -62,30 +62,52 @@ public class ProductManagement extends HttpServlet {
                 part.write(realPath + "/" + filename);
                 // Add product
                 Hoa hoa = new Hoa(0, tenhoa, gia, filename, maloai, new Date(new java.util.Date().getTime()));
-                if(hoaDao.Insert(hoa)){
-                   request.setAttribute("success", "Thêm sản phẩm thành công");
-                }
-                else{
-                   request.setAttribute("error", "Thêm sản phẩm thất bại");
+                if (hoaDao.Insert(hoa)) {
+                    request.setAttribute("success", "Thêm sản phẩm thành công");
+                } else {
+                    request.setAttribute("error", "Thêm sản phẩm thất bại");
                 }
                 request.getRequestDispatcher("ProductManagement?action=list").forward(request, response);
                 break;
             case "edit":
-                if(request.getMethod().equalsIgnoreCase("GET")){
-                   request.setAttribute("dsLoai", loaiDao.getAll());
-                   request.getRequestDispatcher("admin/add-product.jsp").forward(request, response);
-                }
-                break;
-            case "delete":
-                String maHoaXoa = request.getParameter("mahoa"); 
-                if (maHoaXoa != null) {
-                    int maHoa = Integer.parseInt(maHoaXoa);
-                    boolean isDeleted = hoaDao.Delete(maHoa);
-                    if (isDeleted) {
-                       request.setAttribute("message", "Xóa sản phẩm thành công.");
+                if (request.getMethod().equalsIgnoreCase("GET")) {
+                    int maHoa = Integer.parseInt(request.getParameter("mahoa"));
+                    request.setAttribute("hoa", hoaDao.getById(maHoa));
+                    request.setAttribute("dsLoai", loaiDao.getAll());
+                    request.getRequestDispatcher("admin/edit-product.jsp").forward(request, response);
+                } else if (request.getMethod().equalsIgnoreCase("POST")) {
+                    int maHoa = Integer.parseInt(request.getParameter("mahoa"));
+                    String tenHoa = request.getParameter("tenhoa");
+                    double giaThanh = Double.parseDouble(request.getParameter("gia"));
+                    Part p = request.getPart("hinhanh");
+                    
+                    int maLoai = Integer.parseInt(request.getParameter("theloai"));
+                    String file = request.getParameter("oldImg");
+                    if (p.getSize() > 0) {
+                        String path = request.getServletContext().getRealPath("/assets/images/products");
+                        file = Paths.get(p.getSubmittedFileName()).getFileName().toString();
+                        p.write(path + "/" + file);
+
+                    }
+                    Hoa objUpdate = new Hoa(maHoa, tenHoa, giaThanh, file, maLoai, new Date(new java.util.Date().getTime()));
+                    if(hoaDao.Update(objUpdate)){
+                       request.setAttribute("success", "Cập nhật sản phẩm thành công");
                     }
                     else{
-                       request.setAttribute("error", "Xóa sản phẩm thất bại.");
+                       request.setAttribute("error", "Cập nhật sản phẩm thất bại");
+                    }
+                    request.getRequestDispatcher("ProductManagement?action=list").forward(request, response);
+                }
+
+                break;
+            case "delete":
+                String maHoaXoa = request.getParameter("mahoa");
+                if (maHoaXoa != null) {
+                    int maHoa = Integer.parseInt(maHoaXoa);
+                    if (hoaDao.Delete(maHoa)) {
+                        request.setAttribute("success", "Xóa sản phẩm thành công.");
+                    } else {
+                        request.setAttribute("error", "Xóa sản phẩm thất bại.");
                     }
                 }
                 request.getRequestDispatcher("ProductManagement?action=list").forward(request, response);

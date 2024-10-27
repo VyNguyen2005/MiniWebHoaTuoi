@@ -52,7 +52,7 @@
                 <td><%= hoa.getMaloai() %></td>
                 <td>
                     <a href="ProductManagement?action=edit&mahoa=<%= hoa.getMahoa() %>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i>Sửa</a>
-                    <a href="ProductManagement?action=delete&mahoa=<%= hoa.getMahoa() %>" class="btn btn-danger" onclick="return confirm("Bạn có chắc chắn muốn xoá sản phẩm này?")" ><i class="bi bi-trash"></i>Xóa</a>
+                    <a href="ProductManagement?action=delete&mahoa=<%= hoa.getMahoa() %>" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')"><i class="bi bi-trash"></i>Xóa</a>
                 </td>
             </tr>
             <%

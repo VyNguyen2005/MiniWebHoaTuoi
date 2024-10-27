@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -128,22 +128,21 @@ public class HoaDAO {
         return false;
     }
 
-    public int getNextMahoa() {
-        int maHoa = 0;
-        String sql = "select max(mahoa) as maxMa from hoa";
-
+    public Hoa getById(int mahoa) {
+        Hoa kq=null;
+        String sql = "select * from Hoa where mahoa=?";
+        conn = DbContext.getConnection();
         try {
-            conn = DbContext.getConnection();
             ps = conn.prepareStatement(sql);
+            ps.setInt(1, mahoa);
             rs = ps.executeQuery();
             if (rs.next()) {
-                maHoa = rs.getInt("maxMa");
+                kq =new Hoa(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5), rs.getDate(6));
             }
-        } catch (Exception e) {
-            System.out.println("Loi:" + e.toString());
+        } catch (Exception ex) {
+            System.out.println("Loi:" + ex.toString());
         }
-
-        return maHoa + 1;
+        return kq;
     }
 
     public static void main(String[] args) {
