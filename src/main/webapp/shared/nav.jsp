@@ -16,6 +16,14 @@
         <li class="nav-item">
           <a class="nav-link" href="ProductManagement">Management</a>
         </li> 
+      </ul>
+        <ul class="navbar-nav">
+            <%
+               if(session.getAttribute("username") != null){
+            %>
+            <%
+                }%>
+        </ul>
     </div>
   </div>
 </nav>
