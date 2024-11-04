@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.Hoa;
 
@@ -32,7 +33,12 @@ public class ProductManagement extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
+        
+        HttpSession session = request.getSession();
+        if(session.getAttribute("username") == null){
+           request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
+        
         HoaDAO hoaDao = new HoaDAO();
         LoaiDAO loaiDao = new LoaiDAO();
 
@@ -42,7 +48,18 @@ public class ProductManagement extends HttpServlet {
         }
         switch (action) {
             case "list":
-                ArrayList<Hoa> dsHoa = hoaDao.getAll();
+                int pageIndex=1;
+                int pageSize=5;
+                if(request.getParameter("page")!=null){
+                    pageIndex=Integer.parseInt(request.getParameter("page"));
+                }
+                int pageSum=(int)Math.ceil((double)hoaDao.getAll().size()/pageSize);
+                
+                ArrayList<Hoa> dsHoa = hoaDao.getBypage(pageIndex, pageSize);
+                request.setAttribute("dsHoa", dsHoa);
+                request.setAttribute("pageSum", pageSum);
+                request.setAttribute("pageIndex", pageIndex);
+//                ArrayList<Hoa> dsHoa = hoaDao.getAll();
                 request.setAttribute("dsHoa", dsHoa);
                 request.getRequestDispatcher("admin/list-product.jsp").forward(request, response);
                 break;

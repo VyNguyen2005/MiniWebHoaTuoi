@@ -10,12 +10,12 @@
 <jsp:include page="../shared/header.jsp"/>
 <jsp:include page="../shared/nav.jsp"/>
 
-<% if (request.getAttribute("success") != null) { %>
+<% if (request.getAttribute("success") != null) {%>
 <script>
     Swal.fire({
         position: "top-center",
         icon: "success",
-        title: "<%= request.getAttribute("success") %>",
+        title: "<%= request.getAttribute("success")%>",
         showConfirmButton: false,
         timer: 1500
     });
@@ -44,15 +44,15 @@
                     for (Hoa hoa : dsHoa) {
             %>
             <tr>
-                <th scope="row"><%= hoa.getTenhoa() %></th>
-                <td><%= hoa.getGia() %> VND</td>
+                <th scope="row"><%= hoa.getTenhoa()%></th>
+                <td><%= hoa.getGia()%> VND</td>
                 <td>
-                    <img style="width: 100px" src="assets/images/products/<%= hoa.getHinh() %>"/>
+                    <img style="width: 100px" src="assets/images/products/<%= hoa.getHinh()%>"/>
                 </td>
-                <td><%= hoa.getMaloai() %></td>
+                <td><%= hoa.getMaloai()%></td>
                 <td>
-                    <a href="ProductManagement?action=edit&mahoa=<%= hoa.getMahoa() %>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i>Sửa</a>
-                    <a href="ProductManagement?action=delete&mahoa=<%= hoa.getMahoa() %>" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')"><i class="bi bi-trash"></i>Xóa</a>
+                    <a href="ProductManagement?action=edit&mahoa=<%= hoa.getMahoa()%>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i>Sửa</a>
+                    <a href="ProductManagement?action=delete&mahoa=<%= hoa.getMahoa()%>" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')"><i class="bi bi-trash"></i>Xóa</a>
                 </td>
             </tr>
             <%
@@ -61,6 +61,20 @@
             %>
         </tbody>
     </table>
+    <div>
+        <ul class="pagination justify-content-center">
+            <%
+                int pageIndex = (int) request.getAttribute("pageIndex");
+                int pageSum = (int) request.getAttribute("pageSum");
+                for (int i = 1; i <= pageSum; i++) {
+            %>
+            <li class="page-item">
+                <a href="ProductManagement?page=<%=i%>" class="page-link <%=pageIndex == i ? "active" : ""%>" > <%=i%></a>
+            </li>
+            <%
+                }%>
+        </ul>
+    </div>
 </div>
 
 <jsp:include page="../shared/footer.jsp"/>
