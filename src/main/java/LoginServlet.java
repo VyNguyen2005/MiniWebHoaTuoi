@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -31,23 +33,26 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
-        if(username.equalsIgnoreCase("admin") && password.equals("admin")){
+
+        AccountDAO accountDAO = new AccountDAO();
+        Account account = accountDAO.validateAccount(username, password);
+
+        if (account != null) {
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             session.setAttribute("password", password);
-            response.sendRedirect("ProductManagement");
+            response.sendRedirect("home.jsp");
         }
-        else{
-           request.setAttribute("error", "Đăng nhập không thành công username hoặc password không đúng");
-           request.getRequestDispatcher("login.jsp").forward(request, response);
+        else {
+            request.setAttribute("error", "Đăng nhập không thành công username hoặc password không đúng");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
