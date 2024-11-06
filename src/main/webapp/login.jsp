@@ -15,7 +15,7 @@
         <h1>Login System</h1>
         <div>
             <label>User name</label>
-            <input type="text" name="username" required class="form-control"/>
+            <input type="text" name="username" required class="form-control" autofocus autocomplete="off"/>
         </div>
         <div>
             <label>Password</label>
@@ -32,8 +32,6 @@
         </div>
         <% 
             }%>
-
-
     </form>
 </div>
 <!--nhung noi dung footer.jsp-->

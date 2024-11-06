@@ -30,7 +30,7 @@ public class AccountDAO {
             ps.setString(2, password);
             rs = ps.executeQuery();
             if (rs.next()) {
-                kq =new Account(rs.getString(1), rs.getString(2));
+                kq = new Account(rs.getString(1), rs.getString(2));
             }
         } catch (Exception ex) {
             System.out.println("Loi:" + ex.toString());
@@ -50,6 +50,8 @@ public class AccountDAO {
                return true;
             }
         } catch (Exception e) {
+            System.out.println("Loi:" + e.toString());
         }
+        return false;
     }
 }

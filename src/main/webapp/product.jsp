@@ -38,8 +38,7 @@
             <div class="row">  
                 <%
                     DecimalFormat fmt=new DecimalFormat("#,##0");
-                    for (Hoa x : dsHoa) {
-                            
+                    for (Hoa x : dsHoa) {                 
                 %>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card mb-2">
@@ -65,7 +64,6 @@
                     }%>
             </div>                       
         </div>
-
     </div>
 </div>    
 
