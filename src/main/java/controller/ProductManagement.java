@@ -38,7 +38,7 @@ public class ProductManagement extends HttpServlet {
         String username = (String) session.getAttribute("username");
         String password = (String) session.getAttribute("password");
         
-        if(username == null || password == null || !username.equals("admin") || !password.equals("12345")){
+        if(username == null || password == null){
            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
         

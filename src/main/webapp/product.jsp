@@ -37,7 +37,7 @@
         <div class="col-sm-9">
             <div class="row">  
                 <%
-                    DecimalFormat fmt=new DecimalFormat("#,##0");
+                    DecimalFormat fmt=new DecimalFormat("#,##0 đồng");
                     for (Hoa x : dsHoa) {                 
                 %>
                 <div class="col-12 col-md-6 col-lg-4">
@@ -51,7 +51,7 @@
                         <div class="card-footer">
                             <div class="row">
                                 <div class="col">
-                                    <p class="btn btn-danger btn-block"><%= x.getGia()%> $</p>
+                                    <p class="btn btn-danger btn-block"><%= fmt.format(x.getGia()) %></p>
                                 </div>
                                 <div class="col">
                                     <a href="#" class="btn btn-success btn-block">Add to cart</a>

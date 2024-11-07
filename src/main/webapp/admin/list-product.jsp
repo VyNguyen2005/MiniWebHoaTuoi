@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="model.Hoa"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -39,13 +40,14 @@
         </thead>
         <tbody>
             <%
+                DecimalFormat fmt=new DecimalFormat("#,##0 đồng");
                 ArrayList<Hoa> dsHoa = (ArrayList<Hoa>) request.getAttribute("dsHoa");
                 if (dsHoa != null) {
                     for (Hoa hoa : dsHoa) {
             %>
             <tr>
                 <th scope="row"><%= hoa.getTenhoa()%></th>
-                <td><%= hoa.getGia()%> VND</td>
+                <td><%= fmt.format(hoa.getGia())%></td>
                 <td>
                     <img style="width: 100px" src="assets/images/products/<%= hoa.getHinh()%>"/>
                 </td>
